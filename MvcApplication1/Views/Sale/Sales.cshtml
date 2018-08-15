@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Sales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+
+    @*<link href="~/Content/CustomStyle.css" rel="stylesheet" />*@
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/knockout-3.4.2.js"></script>
+    <script src="~/Scripts/knockout-3.4.2.debug.js"></script>
+    @*<script src="Sale.js"></script>*@
+    @*<script src="~/Views/Sale/Sale.js"></script>*@
+    @*<script src="~/Views/Sale/Sale1.js"></script>*@
+    <script src="~/Scripts/ViewModels/Sale.js"></script>
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sales</title>
+</head>
+<body>
+    <h2>Sales Terminal</h2>
+
+    <div data-bind="text: SaleDetails().length"></div>
+<label data-bind="text: $root.Id, visible: false"></label>
+    <table id="Sales1" >
+        <thead>
+            <tr>
+                <th style="display: none;">ID</th>
+                <th style="width:200px">Product Name</th>
+                @*<th>Category</th>*@
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Cost</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: $root.SaleDetails">
+            <tr>
+                <td data-bind="visible:false , text: Id "></td>
+                <td >
+                    <select data-bind="options: Products,
+                       optionsText: 'Name',
+                       value: Product"></select>
+                </td>
+                <td data-bind="text: formatCurrency(Product() ? Product().Price : 0)"></td>
+                <td>
+                    <input data-bind="value: Quantity" type="text" title="Quantity" style="width:20px" />
+                </td>
+                <td data-bind="text: Cost"></td>
+                <td >
+                    <button data-bind="click:$root.addLine">Add Line</button>
+                    <button data-bind="click:$root.deleteLine">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    <hr />
+                </td>
+            </tr>
+            <tr>
+                <td>Payment Type :</td>
+                <td></td>
+                <td >
+                    <select data-bind="options: PaymentType"></select>
+                </td>
+                <td></td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>Total :</td>
+                <td></td>
+                <td data-bind="text: formatCurrency($root.GrossAmount())"></td>
+                <td><button data-bind="click:$root.reset">Reset</button></td>
+                <td>
+                    <button data-bind="click:$root.create">Save</button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>
+

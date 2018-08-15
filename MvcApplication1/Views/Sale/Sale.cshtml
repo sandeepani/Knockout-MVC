@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Sales List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+
+    @*<link href="~/Content/CustomStyle.css" rel="stylesheet" />*@
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/knockout-3.4.2.js"></script>
+    <script src="~/Scripts/knockout-3.4.2.debug.js"></script>
+    @*<script src="Sale.js"></script>*@
+    @*<script src="~/Views/Sale/Sale.js"></script>*@
+    @*<script src="~/Views/Sale/Sale1.js"></script>*@
+    <script src="~/Scripts/Sale1.js"></script>
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sales</title>
+</head>
+<body>
+    <h2>Sales Terminal</h2>
+
+    <div data-bind="text: Sales().length"></div>
+
+    <table id="Sales1" data-bind="visible: SaleDetails().length > 0">
+        <thead>
+            <tr>
+                <th style="display: none;">ID</th>
+                <th>Name</th>
+                @*<th>Category</th>*@
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: SaleDetails">
+            <tr>
+                <td data-bind="visible:false , text: Id "></td>
+                <td data-bind=" text: Name "></td>
+                <td data-bind="text: formatCurrency(Product.Name)"></td>
+                <td>
+                    <input data-bind="value: formatQuantity(Quantity)" type="text" title="Quantity" />
+                </td>
+                <td data-bind="text: formatQuantity(Cost)"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    <hr />
+                </td>
+            </tr>
+            <tr>
+                <td>Total :</td>
+                <td></td>
+                <td data-bind="text: formatCurrency($root.GrossAmount())"></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>
